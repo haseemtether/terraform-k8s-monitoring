@@ -16,6 +16,16 @@ Ensure you have the following installed:
 
 ## **Setup Instructions**
 
+**Note:** Minikube typically creates a default `standard` StorageClass, but this depends on the driver being used. You can check the available storage classes using: 
+```sh
+kubectl get storageclass 
+```
+If not available
+```sh
+minikube addons enable default-storageclass 
+```
+The "standard" storage class is being used by elastic search to create persistent volume. 
+
 ### **1. Start Minikube**
 ```sh
 minikube start
