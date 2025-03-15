@@ -16,6 +16,11 @@ Ensure you have the following installed:
 
 ## **Setup Instructions**
 
+### **1. Start Minikube**
+```sh
+minikube start
+```
+
 **Note:** Minikube typically creates a default `standard` StorageClass, but this depends on the driver being used. You can check the available storage classes using: 
 ```sh
 kubectl get storageclass 
@@ -25,11 +30,6 @@ If not available
 minikube addons enable default-storageclass 
 ```
 The "standard" storage class is being used by elastic search to create persistent volume. 
-
-### **1. Start Minikube**
-```sh
-minikube start
-```
 
 ### **2. Configure Kubeconfig**
 Ensure your Kubernetes configuration is available at `~/.kube/config`.
