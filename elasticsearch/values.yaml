@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: docker.elastic.co/elasticsearch/elasticsearch
+  tag: "8.13.0"
+  pullPolicy: IfNotPresent
+
+service:
+  name: elasticsearch
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+      nodePort: 30200
+    - name: transport
+      port: 9300
+      targetPort: 9300
+      nodePort: 30300
+
+volume:
+  storageClass: "standard"
+  size: 5Gi
+
+security:
+  enabled: false
+  discoveryType: "single-node"
+

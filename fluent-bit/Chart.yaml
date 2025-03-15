@@ -1,0 +1,7 @@
+apiVersion: v2
+name: fluent-bit
+description: A Helm chart for Fluent Bit
+type: application
+version: 0.1.0
+appVersion: "3.0.3"
+

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name }}
+  namespace: {{ .Values.configMap.namespace }}
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Daemon Off
+        Flush 5  # Send logs every 5 seconds instead of 1
+        Log_Level info
+        HTTP_Server On
+        HTTP_Listen 0.0.0.0
+        HTTP_Port 2020
+        Health_Check On
+        Parsers_File /fluent-bit/etc/parsers.conf
+
+    [INPUT]
+        Name tail
+        Path /var/log/containers/*.log
+        Tag kube.*
+        Mem_Buf_Limit 5MB
+        Skip_Long_Lines On
+
+    [FILTER]
+        Name throttle
+        Match kube.*
+        Rate 500   # Allow max 500 logs per second
+        Window 5   # Apply limit over 5 seconds
+        Interval 1s # Evaluate every second
+
+    [FILTER]
+        Name grep
+        Match kube.*
+        Exclude log ^.*(kube-probe|liveness|readiness).*  # Drop unnecessary logs
+
+    [OUTPUT]
+        Name es
+        Match kube.*
+        Host elasticsearch
+        Port 9200
+        Index fluent-bit
+        Logstash_Format On
+        Retry_Limit False
+        Suppress_Type_Name On

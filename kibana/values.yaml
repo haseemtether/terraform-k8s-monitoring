@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: docker.elastic.co/kibana/kibana
+  tag: "8.13.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5601
+  nodePort: 30601
+
+resources: {}
+

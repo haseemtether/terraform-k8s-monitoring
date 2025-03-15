@@ -1,0 +1,10 @@
+# Ignore Terraform-related files
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+
+# Ignore Minikube-related files
+minikube_ip.txt
+
